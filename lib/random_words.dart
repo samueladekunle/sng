@@ -2,17 +2,20 @@ import "package:flutter/material.dart";
 import "package:english_words/english_words.dart";
 
 class RandomWords extends StatefulWidget {
+	RandomWords({ Key key, this.saved }) : super(key: key);
+
+	final Set<WordPair> saved;
+
 	@override
 	_RandomWordsState createState() => _RandomWordsState();
 }
 
 class _RandomWordsState extends State<RandomWords> {
 	final _suggestions = <WordPair>[];
-	final _saved = Set<WordPair>();
 	final _biggerFont = TextStyle(fontSize: 18.0);
 
 	Widget _buildListTile(WordPair pair) {
-		final bool _alreadySaved = _saved.contains(pair);
+		final bool _alreadySaved = widget.saved.contains(pair);
 		return ListTile(
 			title: Text(
 				pair.asPascalCase,
@@ -25,9 +28,9 @@ class _RandomWordsState extends State<RandomWords> {
 			onTap: () {
 				setState(() {
 					if (_alreadySaved) {
-						_saved.remove(pair);
+						widget.saved.remove(pair);
 					} else {
-						_saved.add(pair);
+						widget.saved.add(pair);
 					}
 				});
 			},
