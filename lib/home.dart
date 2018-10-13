@@ -1,8 +1,11 @@
 import "package:flutter/material.dart";
+import "package:english_words/english_words.dart";
 
 import "random_words.dart";
 
 class Home extends StatelessWidget {
+	final _saved = Set<WordPair>();
+
 	Widget build(BuildContext context) {
 		return Scaffold(
 			appBar: AppBar(
@@ -15,7 +18,7 @@ class Home extends StatelessWidget {
 					),
 				],
 			),
-			body: RandomWords(),
+			body: RandomWords(saved: _saved),
 		);
 	}
 }
