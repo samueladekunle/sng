@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 
+import "random_words.dart";
+
 class Home extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return Scaffold(
@@ -13,9 +15,7 @@ class Home extends StatelessWidget {
 					),
 				],
 			),
-			body: Center(
-				child: Text("Startup Name Generator"),
-			),
+			body: RandomWords(),
 		);
 	}
 }
