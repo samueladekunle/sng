@@ -10,6 +10,7 @@ class App extends StatelessWidget {
       title: "Startup Name Generator",
       theme: ThemeData(
         primaryColor: Colors.white,
+        dividerColor: Colors.black,
       ),
       home: Home(),
     );
