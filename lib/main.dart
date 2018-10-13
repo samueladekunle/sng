@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 
+import "home.dart";
+
 void main() => runApp(App());
 
 class App extends StatelessWidget {
@@ -9,14 +11,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Startup Name Generator"),
-        ),
-        body: Center(
-          child: Text("Startup Name Generator"),
-        ),
-      ),
+      home: Home(),
     );
   }
 }
