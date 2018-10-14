@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
-import "package:english_words/english_words.dart";
 
 class Favorites extends StatefulWidget {
 	Favorites({Key key, this.saved, this.context}) : super(key: key);
 
-	final Set<WordPair> saved;
+  final Set<String> saved;
 	final BuildContext context;
 
 	@override
@@ -17,9 +16,9 @@ class _FavoritesState extends State<Favorites> {
 
 	initState() {
 		super.initState();
-		tiles = widget.saved.map((WordPair pair) => ListTile(
-			title: Text(pair.asPascalCase, style: _biggerFont),
-		));
+    tiles = widget.saved.map((String text) => ListTile(
+      title: Text(text, style: _biggerFont),
+    ));
 		divided = ListTile.divideTiles(
 			context: widget.context,
 			tiles: tiles,

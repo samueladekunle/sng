@@ -1,10 +1,13 @@
 import "package:flutter/material.dart";
 import "package:english_words/english_words.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 class RandomWords extends StatefulWidget {
-	RandomWords({ Key key, this.saved }) : super(key: key);
+	RandomWords({ Key key, this.saved, this.prefs, this.saveFavorites }) : super(key: key);
 
-	final Set<WordPair> saved;
+  final SharedPreferences prefs;
+	final Set<String> saved;
+  final saveFavorites;
 
 	@override
 	_RandomWordsState createState() => _RandomWordsState();
@@ -15,10 +18,12 @@ class _RandomWordsState extends State<RandomWords> {
 	final _biggerFont = TextStyle(fontSize: 18.0);
 
 	Widget _buildListTile(WordPair pair) {
-		final bool _alreadySaved = widget.saved.contains(pair);
+    final String _text = pair.asPascalCase;
+    final bool _alreadySaved = widget.saved.contains(_text);
+
 		return ListTile(
 			title: Text(
-				pair.asPascalCase,
+        _text,
 				style: _biggerFont,
 			),
 			trailing: Icon(
@@ -28,10 +33,12 @@ class _RandomWordsState extends State<RandomWords> {
 			onTap: () {
 				setState(() {
 					if (_alreadySaved) {
-						widget.saved.remove(pair);
+            widget.saved.remove(_text);
 					} else {
-						widget.saved.add(pair);
+            widget.saved.add(_text);
 					}
+
+          widget.saveFavorites(widget.saved);
 				});
 			},
 		);
@@ -39,7 +46,6 @@ class _RandomWordsState extends State<RandomWords> {
 
 	Widget _buildList() {
 		return ListView.builder(
-			padding: EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
 			itemBuilder: (context, i) {
 				if (i.isOdd)
 					return Divider();
