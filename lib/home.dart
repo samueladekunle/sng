@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:english_words/english_words.dart";
 
 import "random_words.dart";
+import "favorites.dart";
 
 class Home extends StatelessWidget {
 	final _saved = Set<WordPair>();
@@ -13,7 +14,11 @@ class Home extends StatelessWidget {
 				actions: [
 					IconButton(
 						icon: Icon(Icons.list),
-						onPressed: null,
+						onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (BuildContext context) => Favorites(saved: _saved)),
+              );
+            },
 						tooltip: "Favorites",
 					),
 				],
