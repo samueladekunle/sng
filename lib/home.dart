@@ -7,6 +7,14 @@ import "favorites.dart";
 class Home extends StatelessWidget {
 	final _saved = Set<WordPair>();
 
+  void _onPressed(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => Favorites(saved: _saved, context: context),
+      ),
+    );
+  }
+
 	Widget build(BuildContext context) {
 		return Scaffold(
 			appBar: AppBar(
@@ -14,11 +22,7 @@ class Home extends StatelessWidget {
 				actions: [
 					IconButton(
 						icon: Icon(Icons.list),
-						onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) => Favorites(saved: _saved, context: context)),
-              );
-            },
+						onPressed: () => _onPressed(context),
 						tooltip: "Favorites",
 					),
 				],
