@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
 						icon: Icon(Icons.list),
 						onPressed: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) => Favorites(saved: _saved)),
+                MaterialPageRoute(builder: (BuildContext context) => Favorites(saved: _saved, context: context)),
               );
             },
 						tooltip: "Favorites",
