@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:english_words/english_words.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 import "random_words.dart";
 import "favorites.dart";
