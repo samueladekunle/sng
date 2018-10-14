@@ -11,19 +11,36 @@ class Favorites extends StatefulWidget {
 }
 
 class _FavoritesState extends State<Favorites> {
-	var tiles, divided;
+  Widget checkbox;
+  Map<String, bool> favorites = Map<String, bool>();
+  bool isLongPressed = false, isChecked = false;
 	TextStyle _biggerFont = TextStyle(fontSize: 18.0);
 
-	initState() {
+	void initState() {
 		super.initState();
-    tiles = widget.saved.map((String text) => ListTile(
-      title: Text(text, style: _biggerFont),
-    ));
-		divided = ListTile.divideTiles(
-			context: widget.context,
-			tiles: tiles,
-		).toList();
+		widget.saved.forEach((fav) {
+			favorites[fav] = false;
+		});
 	}
+
+  Widget _buildList() {
+  	final listTiles = favorites.keys.map((String key) => CheckboxListTile(
+  		activeColor: Colors.black,
+  		title: Text(key, style: _biggerFont),
+  		value: favorites[key],
+  		onChanged: (bool _value) {
+  			setState(() {
+  				favorites[key] = _value;
+  			});
+  		}
+  	));
+    final dividedTiles = ListTile.divideTiles(
+      tiles: listTiles,
+      context: context,
+    );
+    final listView = ListView(children: dividedTiles.toList());
+    return listView;
+  }
 
 	@override
 	Widget build(BuildContext context) {
@@ -31,7 +48,8 @@ class _FavoritesState extends State<Favorites> {
 			appBar: AppBar(
 				title: Text("Favorites"),
 			),
-			body: ListView(children: divided),
+			// body: ListView(children: divided),
+      body: _buildList(),
 		);
 	}
 }
