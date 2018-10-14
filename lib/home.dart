@@ -13,7 +13,11 @@ class _HomeState extends State<Home> {
   Set<String> _saved = Set<String>();
   SharedPreferences _prefs;
 
-  _loadSaved() async {
+  void _saveFavorites(Set<String> favorites) async {
+    _prefs.setStringList("favorites", favorites.toList());
+  }
+
+  void _loadSaved() async {
     _prefs = await SharedPreferences.getInstance();
     final _list = _prefs.get("favorites");
 
@@ -26,7 +30,7 @@ class _HomeState extends State<Home> {
     print("The value of _saved is $_saved");
   }
 
-  initState() {
+  void initState() {
     super.initState();
     _loadSaved();
   }
@@ -54,6 +58,7 @@ class _HomeState extends State<Home> {
 			body: RandomWords(
         prefs: _prefs,
         saved: _saved,
+        saveFavorites: _saveFavorites,
       ),
 		);
 	}
