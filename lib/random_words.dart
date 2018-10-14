@@ -3,10 +3,11 @@ import "package:english_words/english_words.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 class RandomWords extends StatefulWidget {
-	RandomWords({ Key key, this.saved, this.prefs }) : super(key: key);
+	RandomWords({ Key key, this.saved, this.prefs, this.saveFavorites }) : super(key: key);
 
   final SharedPreferences prefs;
 	final Set<String> saved;
+  final saveFavorites;
 
 	@override
 	_RandomWordsState createState() => _RandomWordsState();
@@ -19,6 +20,7 @@ class _RandomWordsState extends State<RandomWords> {
 	Widget _buildListTile(WordPair pair) {
     final String _text = pair.asPascalCase;
     final bool _alreadySaved = widget.saved.contains(_text);
+
 		return ListTile(
 			title: Text(
         _text,
@@ -35,6 +37,8 @@ class _RandomWordsState extends State<RandomWords> {
 					} else {
             widget.saved.add(_text);
 					}
+
+          widget.saveFavorites(widget.saved);
 				});
 			},
 		);
