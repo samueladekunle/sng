@@ -15,19 +15,21 @@ class _HomeState extends State<Home> {
 
   void _saveFavorites(Set<String> favorites) async {
     _prefs.setStringList("favorites", favorites.toList());
+    // print("Saved ${favorites.toList()}");
   }
 
   void _loadSaved() async {
     _prefs = await SharedPreferences.getInstance();
     final _list = _prefs.get("favorites");
 
-    if (_list == null) {
-      _prefs.setStringList("favorites", _saved.toList());
-    } else {
-      _saved = Set.from(_list);
-    }
-
-    print("The value of _saved is $_saved");
+    setState(() {
+      if (_list == null) {
+        _prefs.setStringList("favorites", _saved.toList());
+      } else {
+        _saved = Set.from(_list);
+      }
+    });
+    // print("The value of _saved is $_saved");
   }
 
   void initState() {
