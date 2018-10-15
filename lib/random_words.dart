@@ -37,7 +37,6 @@ class _RandomWordsState extends State<RandomWords> {
 					} else {
             widget.saved.add(_text);
 					}
-
           widget.saveFavorites(widget.saved);
 				});
 			},
