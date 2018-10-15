@@ -11,17 +11,31 @@ class Favorites extends StatefulWidget {
 }
 
 class _FavoritesState extends State<Favorites> {
-  Widget checkbox;
   Map<String, bool> favorites = Map<String, bool>();
-  bool isLongPressed = false, isChecked = false;
 	TextStyle _biggerFont = TextStyle(fontSize: 18.0);
 
 	void initState() {
 		super.initState();
-		widget.saved.forEach((fav) {
-			favorites[fav] = false;
-		});
+    setState(() {
+      widget.saved.forEach((String fav) {
+        favorites[fav] = false;
+      });
+    });
 	}
+
+  List<Widget> _buildActionList() {
+    IconButton _deleteIcon = IconButton(
+      icon: Icon(Icons.delete_outline),
+      onPressed: () => print("Pressed delete button"),
+    );
+    List<Widget> _list = [];
+    setState(() {
+      if (favorites.containsValue(true)) {
+        _list.add(_deleteIcon);
+      }
+    });
+    return _list;
+  }
 
   Widget _buildList() {
   	final listTiles = favorites.keys.map((String key) => CheckboxListTile(
@@ -47,8 +61,8 @@ class _FavoritesState extends State<Favorites> {
 		return Scaffold(
 			appBar: AppBar(
 				title: Text("Favorites"),
+        actions: _buildActionList(),
 			),
-			// body: ListView(children: divided),
       body: _buildList(),
 		);
 	}
