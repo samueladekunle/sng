@@ -13,9 +13,8 @@ class _HomeState extends State<Home> {
   Set<String> _saved = Set<String>();
   SharedPreferences _prefs;
 
-  void _saveFavorites(Set<String> favorites) async {
-    _prefs.setStringList("favorites", favorites.toList());
-    // print("Saved ${favorites.toList()}");
+  void _saveFavorites(List<String> favorites) async {
+    await _prefs.setStringList("favorites", favorites);
   }
 
   void _loadSaved() async {
@@ -26,10 +25,9 @@ class _HomeState extends State<Home> {
       if (_list == null) {
         _prefs.setStringList("favorites", _saved.toList());
       } else {
-        _saved = Set.from(_list);
+        _saved = Set<String>.from(_list);
       }
     });
-    // print("The value of _saved is $_saved");
   }
 
   void initState() {
@@ -37,10 +35,10 @@ class _HomeState extends State<Home> {
     _loadSaved();
   }
 
-  void _onPressed(BuildContext context) {
+  void _onPressed() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext context) => Favorites(saved: _saved, context: context),
+        builder: (BuildContext context) => Favorites(saved: _saved, saveFavorites: _saveFavorites),
       ),
     );
   }
@@ -52,13 +50,12 @@ class _HomeState extends State<Home> {
 				actions: [
 					IconButton(
 						icon: Icon(Icons.list),
-						onPressed: () => _onPressed(context),
-						tooltip: "Favorites",
+						onPressed: () => _onPressed(),
+						tooltip: "Go to Favorites",
 					),
 				],
 			),
 			body: RandomWords(
-        prefs: _prefs,
         saved: _saved,
         saveFavorites: _saveFavorites,
       ),
