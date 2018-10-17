@@ -1,4 +1,4 @@
-package com.example.sng;
+package com.samueladekunle.sng;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
