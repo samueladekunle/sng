@@ -1,11 +1,9 @@
 import "package:flutter/material.dart";
 import "package:english_words/english_words.dart";
-import "package:shared_preferences/shared_preferences.dart";
 
 class RandomWords extends StatefulWidget {
-	RandomWords({ Key key, this.saved, this.prefs, this.saveFavorites }) : super(key: key);
-
-  final SharedPreferences prefs;
+	RandomWords({ Key key, this.saved, this.saveFavorites }) : super(key: key);
+  
 	final Set<String> saved;
   final saveFavorites;
 
@@ -37,8 +35,8 @@ class _RandomWordsState extends State<RandomWords> {
 					} else {
             widget.saved.add(_text);
 					}
-
-          widget.saveFavorites(widget.saved);
+          // update shared preferences
+          widget.saveFavorites(widget.saved.toList());
 				});
 			},
 		);
