@@ -3,10 +3,10 @@ import "dart:async";
 import "package:flutter/material.dart";
 
 class Favorites extends StatefulWidget {
-	Favorites({Key key, this.saved, this.context}) : super(key: key);
+	Favorites({Key key, this.saved, this.saveFavorites}) : super(key: key);
 
   final Set<String> saved;
-	final BuildContext context;
+  final saveFavorites;
 
 	@override
 	_FavoritesState createState() => _FavoritesState();
@@ -24,7 +24,7 @@ class _FavoritesState extends State<Favorites> {
       });
     });
 	}
-
+  
   Future<Null> _shouldDelete() async {
     int _counter = 0;
     favorites.values.forEach((bool val) {
@@ -47,7 +47,16 @@ class _FavoritesState extends State<Favorites> {
             FlatButton(
               child: Text("DELETE", style: TextStyle(color: Colors.black)),
               onPressed: () {
-                print("Deleted");
+                setState(() {
+                  // remove entries whose values are true.
+                  favorites.removeWhere((String key, bool val) => val == true);
+                  // update shared preferences
+                  widget.saveFavorites(List<String>.from(favorites.keys));
+                  // remove all elements in widget.saved
+                  widget.saved.clear();
+                  // update widget.saved
+                  widget.saved.addAll(favorites.keys);
+                });
                 Navigator.of(context).pop();
               },
             ),
@@ -60,12 +69,8 @@ class _FavoritesState extends State<Favorites> {
   List<Widget> _buildActionList() {
     IconButton _deleteIcon = IconButton(
       icon: Icon(Icons.delete_outline),
-      tooltip: "Delete",
-      // onPressed: () => print("Pressed delete button"),
-      onPressed: () {
-        _shouldDelete().then((value) => print("Value: $value"))
-                       .catchError((error) => print("Error: $error"));
-      },
+      tooltip: "Delete items",
+      onPressed: () => _shouldDelete(),
     );
     List<Widget> _list = [];
     setState(() {
@@ -102,7 +107,7 @@ class _FavoritesState extends State<Favorites> {
 				title: Text("Favorites"),
         actions: _buildActionList(),
 			),
-      body: _buildList(),
+      body: widget.saved.isEmpty ? Center(child: Text("No name has been favorited")) : _buildList(),
 		);
 	}
 }
