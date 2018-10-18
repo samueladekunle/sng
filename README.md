@@ -11,7 +11,7 @@ For help getting started with Flutter, view the online
 
 ## Installation
 
-Android - [download the apk](build/app/outputs/releases/app.apk).
+Android - [download the apk](https://github.com/samueladekunle/sng/releases/download/v0.1.0/app-release.apk) (5.31MB).
 
 iOS - run in the simulator after [setting up your IDE](https://flutter.io/get-started/editor/).
 
